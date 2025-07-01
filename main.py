@@ -2,6 +2,7 @@ import os
 from langchain.memory import ConversationBufferMemory
 from langchain.agents import Tool
 from langchain_huggingface import HuggingFaceEndpoint
+from langchain_openai import OpenAI
 
 # Prompt: Personal Assistant
 system_prompt = """
@@ -27,12 +28,11 @@ tools = [
     )
 ]
 
-# Model: BloomZ-560m (chat model, gratis via HuggingFace)
-llm = HuggingFaceEndpoint(
-    repo_id="bigscience/bloomz-560m",
-    huggingfacehub_api_token=os.getenv("HUGGINGFACEHUB_API_TOKEN"),
+# Model: OpenAI GPT (chat model, via OpenAI API)
+llm = OpenAI(
+    openai_api_key=os.getenv("OPENAI_API_KEY"),
     temperature=0.7,
-    max_new_tokens=512
+    max_tokens=512
 )
 
 # Agent (conversational)
